@@ -1,7 +1,7 @@
+package Base;
 
 import Utilities.ConfigReader;
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,14 +23,14 @@ import java.util.*;
 
 import static Base.BaseTest.driver;
 import static Base.BaseTest.getDriver;
-import static ExtentReports.ExtentTestManager.getTest;
+
 import static org.testng.Assert.assertTrue;
 
 public class BaseStepMethod {
 
     private static final Logger LOGGER = LogManager.getLogger(BaseStepMethod.class);
     private WebDriverWait wait;
-   private String titleCSV;
+    private String titleCSV;
 
     //Constructor
     public BaseStepMethod() {
@@ -73,7 +73,7 @@ public class BaseStepMethod {
         try {
             element = wait.until(ExpectedConditions.urlToBe(URL));
         } catch (Exception e) {
-           // LOGGER.error("URL is not "+URL);
+            // LOGGER.error("URL is not "+URL);
             //System.out.println(URL);
         }
     }
@@ -153,7 +153,7 @@ public class BaseStepMethod {
 
     protected void checkStatusNetwork() throws IOException {
         LOGGER.info("User connecting to the Http Network status of the page.");
-        getTest().info("User connecting to the Http Network status of the page.");
+
 
         HttpURLConnection cn = (HttpURLConnection) new URL(driver.getCurrentUrl()).openConnection();
 
@@ -162,7 +162,7 @@ public class BaseStepMethod {
         Integer c = cn.getResponseCode();
 
         LOGGER.info(driver.getCurrentUrl() + " Http status code: " + c);
-        getTest().info(driver.getCurrentUrl() + " Http status code: " + c);
+
 
         Assert.assertFalse(c.toString().startsWith("4") || c.toString().startsWith("5"), c + "Invalid Link " + driver.getCurrentUrl());
         cn.disconnect();
@@ -170,7 +170,7 @@ public class BaseStepMethod {
 
     protected void imgCheckStatusNetwork(String imgURL) throws IOException {
         LOGGER.info("Kullanıcı sayfanın img'in Network status'üne bağlanıyor.");
-        getTest().info("Kullanıcı sayfanın img'in Network status'üne bağlanıyor.");
+
         try {
             HttpURLConnection cn = (HttpURLConnection) new URL(driver.getCurrentUrl())
                     .openConnection();
@@ -179,7 +179,7 @@ public class BaseStepMethod {
             cn.connect();
             Integer c = cn.getResponseCode();
             LOGGER.info(imgURL + " Http status code: " + c);
-            getTest().info(imgURL + " Http status code: " + c);
+
 
             Assert.assertFalse(c.toString().startsWith("4") || c.toString().startsWith("5"), c + "Broken pic " + imgURL);
             cn.disconnect();
@@ -190,7 +190,7 @@ public class BaseStepMethod {
 
     protected void checkStatusNetworkNotAssertion() throws IOException {
         LOGGER.info("Kullanıcı sayfanın Http Network status'üne bağlanıyor.");
-        getTest().info("Kullanıcı sayfanın Http Network status'üne bağlanıyor.");
+
 
         HttpURLConnection cn = (HttpURLConnection) new URL(driver.getCurrentUrl())
                 .openConnection();
@@ -200,7 +200,7 @@ public class BaseStepMethod {
         Integer c = cn.getResponseCode();
 
         LOGGER.info(driver.getCurrentUrl() + " Http status code: " + c);
-        getTest().info(driver.getCurrentUrl() + " Http status code: " + c);
+
 
         cn.disconnect();
 
@@ -235,13 +235,13 @@ public class BaseStepMethod {
 
     protected void imgCheckStatusNetworkHttp(String imgURL) throws IOException {
         LOGGER.info("Kullanıcı sayfanın img'in Network status'üne bağlanıyor.");
-        getTest().info("Kullanıcı sayfanın img'in Network status'üne bağlanıyor.");
+
         HttpURLConnection cn = (HttpURLConnection) new URL(imgURL).openConnection();
         cn.setRequestMethod("HEAD");
         cn.connect();
         Integer c = cn.getResponseCode();
         LOGGER.info(driver.getCurrentUrl() + " Http status code: " + c);
-        getTest().info(driver.getCurrentUrl() + " Http status code: " + c);
+
         Assert.assertFalse(c.toString().startsWith("4") || c.toString().startsWith("5"), c + "Invalid Link " + driver.getCurrentUrl());
 
 
@@ -340,36 +340,4 @@ public class BaseStepMethod {
         }
     }
 
-
-
-
-    public void go_To_HepsiBuradaSepetim(){
-        driver.navigate().to(ConfigReader.getProperty("sepetimURL"));
-    }
-
-    //csv writer-read
-    protected void csvWriter(By locator) throws IOException {
-        String csv = "C:\\Users\\PC\\IdeaProjects\\Patika_A101_FinalCase\\productsTitle.csv";
-       FileWriter fr=new FileWriter(csv);
-       BufferedWriter br=new BufferedWriter(fr);
-       br.write(getTextElement(locator));
-       br.close();
-    }
-
-    public String csvReader() throws IOException, CsvException {
-        CSVReader reader = new CSVReader(new FileReader("C:\\Users\\PC\\IdeaProjects\\Patika_A101_FinalCase\\productsTitle.csv"));
-        String[] csvCell;
-
-        while ((csvCell=reader.readNext())!=null){
-           titleCSV=csvCell[0];
-
-        }
-        return titleCSV;
-
-    }
-
-
-
-    }
-
-
+}
