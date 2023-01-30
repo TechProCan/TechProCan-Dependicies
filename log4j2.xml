@@ -7,7 +7,7 @@
     <Appenders>
         <!--        formatting fileName for dynamic name generation-->
         <RollingFile name="file"
-                     filePattern="${basePath}/TechProEd-%d{HH-mm-ss-SSS}.log">
+                     filePattern="${basePath}/MarketTask-%d{HH-mm-ss-SSS}.log">
             <PatternLayout>
                 <pattern>%d %p %c{1.} [%t] %m%n</pattern>
             </PatternLayout>
